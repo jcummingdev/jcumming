@@ -69,7 +69,7 @@ export default function CreatePost() {
 
             <button onClick={openFileDialog}>Upload file</button>
 
-            {postData.image && <img src={postData.image} />}
+            {postData.image && <img src={postData.image} alt="blogImage"/>}
 
             <button onClick={postArticle}>Post Article</button>
 
