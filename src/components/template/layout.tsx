@@ -1,6 +1,6 @@
 import Header from './header'
 
-export default function layout (props) {
+export default function layout (props:any) {
   return (
     
     <div>
