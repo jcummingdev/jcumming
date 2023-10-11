@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useState } from "react"
 import { useS3Upload } from "next-s3-upload"
+import Tiptap from "@/components/admin/Tiptap";
 
 export default function CreatePost() {
 
@@ -45,6 +46,12 @@ export default function CreatePost() {
         }))
     };
 
+    function changeContent(incomingHTML:string) {
+        setPostData((prevContent) => ({
+            ...prevContent,
+            content: incomingHTML
+        }));
+    }
 
     // Axios Post Article Function
     async function postArticle() {
@@ -63,13 +70,16 @@ export default function CreatePost() {
 
             <button onClick={logData}>log data</button>
             <input type="text" name="title" onChange={(e) => inputHanlder(e)} />
-            <textarea name="content" id="content" onChange={(e) => inputHanlder(e)} />
 
             <FileInput onChange={handleFileChange} />
 
             <button onClick={openFileDialog}>Upload file</button>
 
             {postData.image && <img src={postData.image} alt="blogImage"/>}
+
+            <Tiptap
+                updater={changeContent}
+            />
 
             <button onClick={postArticle}>Post Article</button>
 
