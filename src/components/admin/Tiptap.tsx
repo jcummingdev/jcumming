@@ -30,7 +30,7 @@ let { FileInput, openFileDialog, uploadToS3 } = useS3Upload();
                 const { schema } = view.state;
                 const coordinates = view.posAtCoords({ left: event.clientX, top: event.clientY });
                 const node = schema.nodes.image.create({ src: url }); // creates the image element
-                const transaction = view.state.tr.insert(coordinates.pos, node); // places it in the correct position
+                const transaction = view.state.tr.insert(coordinates!.pos, node); // places it in the correct position
 
                 // Dispatch the transaction to update the editor state
                 view.dispatch(transaction);
