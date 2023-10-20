@@ -51,7 +51,7 @@ let { FileInput, openFileDialog, uploadToS3 } = useS3Upload();
     }
   
     return (
-      <>
+      <div className='tiptapMenu'>
         <button
           onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
           className={editor.isActive('heading', { level: 2 }) ? 'is-active' : ''}
@@ -111,15 +111,17 @@ let { FileInput, openFileDialog, uploadToS3 } = useS3Upload();
         <button onClick={() => editor.chain().focus().setHardBreak().run()}>
             hard break
         </button>
-      </>
+      </div>
 
     )
   }
 
   return (
-    <div>
+    <div className='postEditor'>
         <MenuBar/>
-        <EditorContent editor={editor} />        
+        <div className='tiptapEditor'>
+          <EditorContent editor={editor} />   
+        </div>
     </div>
 
   )

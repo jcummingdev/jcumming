@@ -68,8 +68,7 @@ export default function CreatePost() {
     return (
         <div className="createPost" id="createPost">
 
-            <button onClick={logData}>log data</button>
-            <input type="text" name="title" onChange={(e) => inputHanlder(e)} />
+            <input type="text" name="title" className="titleInput" placeholder="Post Title" onChange={(e) => inputHanlder(e)} />
 
             <FileInput onChange={handleFileChange} />
 
@@ -81,7 +80,8 @@ export default function CreatePost() {
                 updater={changeContent}
             />
 
-            <button onClick={postArticle}>Post Article</button>
+            <button onClick={postArticle} className="postArticle">Post Article</button>
+            <button onClick={logData}>log data</button>
 
         </div>
     )

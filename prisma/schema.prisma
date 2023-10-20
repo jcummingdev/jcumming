@@ -29,9 +29,11 @@ model Account {
 model Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique
-  userId       String @unique
+  userId       String   @unique
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model User {
@@ -58,6 +60,16 @@ model Posts {
   title String
   content String @db.Text
   image String ?
+  catId String ?
+  category PostCategories ? @relation(fields: [catId], references: [id], onDelete: Cascade)
+
+  @@index([catId])
+}
+
+model PostCategories {
+  id String @id @default(cuid())
+  name String
+  posts Posts[]
 }
 
 
