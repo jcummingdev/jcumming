@@ -39,11 +39,13 @@ body {
   overflow-x: hidden;
   font-family: 'Inter', sans-serif;
   font-weight: 300;
+  transition: .3s ease;
 }
 
 h1, h2, h3, h4, h5{
   font-family: 'Pixelify Sans', sans-serif;  
   font-weight: 700;
+  transition: .3s ease;
 }
 
 body {
@@ -54,8 +56,12 @@ a {
   color: inherit;
   text-decoration: none;
   font-family: 'Pixelify Sans', sans-serif;
+  transition: .3s ease;;
 }
 
+p, span {
+  transition: .3s ease;
+}
 
 
 
@@ -68,7 +74,6 @@ a {
 /* template setting  */
 
 main{
-  margin-top: 120px !important;
   display: block;
 }
 
@@ -80,8 +85,8 @@ main{
 }
 
 .panel{
-  width: 100vw;
   height: 100vh;
+  padding: 120px 0px;
 }
 
 header{
@@ -91,6 +96,24 @@ header{
   top: 0px;
   transition: .3s ease;
   z-index: 2;
+}
+
+.scrollStyle{
+  box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.15);
+}
+
+.staticStyle{
+  box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.0);
+}
+
+header h1{
+  transition: .3s ease;
+  font-weight: 300;
+}
+
+.staticStyle h1{
+  font-size: 1rem;
+  font-weight: 500;
 }
 
 .headerContainer{
@@ -174,9 +197,33 @@ footer::before{
 }
 
 
+/* dark mode  */
+
+.darkMode body{
+  background: black;
+}
+
+.darkMode header{
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(5px);
+}
+
+.darkMode > * {
+  color: white;
+}
+
+.darkMode .tagline{
+  color: white;
+  opacity: .7;
+}
+
 
 
 /* post page */
+
+.createPost{
+  margin-top: 120px;
+}
 
 .postEditor{
   display: flex;
@@ -228,4 +275,121 @@ footer::before{
 
 .titleInput{
   font-size: 2rem;
+}
+
+
+/* home panel styling  */
+
+.introPanel{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.introHead{
+  font-size: 3rem;
+  font-weight: 300;
+  font-family: 'inter', sans-serif;
+  margin-bottom: 50px;
+}
+
+.introHead span {
+  font-size: 8rem;
+  display: block;
+  margin: 20px;
+  font-weight: 700;
+}
+
+/* portfolio panel  */
+
+.portfolioPanel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.portfolioPanel h1{
+  font-family: 'inter', sans-serif;
+  font-size: 8rem;
+  z-index: 2;
+  position: relative;
+  width: fit-content;
+}
+
+.portfolioPanel .background{
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: -10px;
+  bottom: 0px;
+  font-size: 1.5rem;
+  opacity: .2;
+}
+
+.workShowcase{
+  display: flex;
+  flex-direction: row-reverse;
+  position: absolute;
+  right: 0px;
+  top: 80px;
+  z-index: 0;
+  perspective: 500px;
+  transition: 1s ease-in-out;
+  transform: translate(100%);
+}
+
+.darkMode .workShowcase{
+  transform: translate(0%);
+}
+
+.workShowcase .card{
+  background: black;
+  width: 500px;
+  height: calc(100vh - 100px);
+  transform: rotateY(-15deg);
+  transition: 1s ease;
+  box-shadow: 20px 0px 30px 5px rgba(0,0,0,0.5);
+  position: relative;
+  margin-right: -150px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 30px;
+}
+
+.workShowcase span:hover{
+  transform: scale(1, 1);
+  z-index: 9;
+  left: 0px;
+  width: 1000px;
+}
+
+.workShowcase span:hover .cardContent{
+  opacity: 1;
+}
+
+
+.workShowcase .lastCard:hover{
+  transform: translateX(-180px) scale(1, 1);
+}
+
+.workShowcase .firstCard:hover{
+  transform: translateX(650px) scale(1, 1);
+}
+
+.cardContent{
+  background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,1) 100%);
+  position: relative;
+  z-index: 2;
+  color: green;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 40px;
+  opacity: 0;
+  transition: 1s ease;
 }

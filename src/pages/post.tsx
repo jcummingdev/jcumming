@@ -66,7 +66,7 @@ export default function CreatePost() {
     }
 
     return (
-        <div className="createPost" id="createPost">
+        <div className="createPost container" id="createPost">
 
             <input type="text" name="title" className="titleInput" placeholder="Post Title" onChange={(e) => inputHanlder(e)} />
 

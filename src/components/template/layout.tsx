@@ -5,7 +5,7 @@ export default function layout (props:any) {
   return (
     <>
       <Header />
-      <main className='container'>
+      <main>
         { props.children }
       </main>
       <Footer />
