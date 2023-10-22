@@ -12,13 +12,15 @@ export default function CreatePost() {
         title: string
         content: string
         image: string
+        catId: string
     }
 
     // Initialize state for the post content and set type to postData
     const [postData, setPostData] = useState<postData>({
         title: '',
         content: '',
-        image: ''
+        image: '',
+        catId: 'clnxu4kll0000lhecglqr630o',
     })
 
 
