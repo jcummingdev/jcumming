@@ -24,7 +24,7 @@ export default function Header () {
   }, [])
   
   function menuToggle(){
-    document.getElementById('header').classList.toggle('menuOpen') 
+    document.getElementById('header')!.classList.toggle('menuOpen') 
   }
   
   return (    
