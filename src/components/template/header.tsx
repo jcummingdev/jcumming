@@ -23,11 +23,11 @@ export default function Header () {
     }
   }, [])
   
-  if (status == 'loading') {
-    return <></>
+  function menuToggle(){
+    document.getElementById('header').classList.toggle('menuOpen') 
   }
-
-  return (
+  
+  return (    
     <header className={navStyle} id='header'>
       <div className="container">
         <div className="headerContainer">
@@ -49,13 +49,34 @@ export default function Header () {
               </ul>
             </nav>
           </div>
-          <button className='menuTrigger desktopHidden'>
+          <button className='menuTrigger desktopHidden' onClick={menuToggle}>
             <span></span>
             <span></span>
             <span></span>
           </button>
         </div>
       </div>
-    </header>
+      
+      <div className='sideMenu' onClick={menuToggle}>
+      <div className='sideMenuPanel' onClick={(e) => {e.stopPropagation}}>
+        <nav>
+          <ul>
+            <li><Link href='/#home' onClick={menuToggle}>Home</Link></li>
+                <li><Link href='/#portfolio' onClick={menuToggle}>Portfolio</Link></li>
+                <li><Link href='/#blog' onClick={menuToggle}>Blog</Link></li>
+                <li><Link href='/#contact' onClick={menuToggle}>Contact</Link></li>
+                {
+                  status === 'authenticated'? <li><Link href='/post' onClick={menuToggle}>New Post</Link></li> : <></>
+                }
+          </ul>
+        </nav>
+        <div>
+           <div className='sideCopyright'>
+             <p>Copyright 2023</p>
+           </div>
+        </div>
+      </div>
+      </div>
+    </header>    
   )
 }
