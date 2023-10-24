@@ -2,8 +2,10 @@ import axios from "axios"
 import { useState } from "react"
 import { useS3Upload } from "next-s3-upload"
 import Tiptap from "@/components/admin/Tiptap";
+import { PrismaClient } from "@prisma/client";
+import { InferGetStaticPropsType } from "next";
 
-export default function CreatePost() {
+export default function CreatePost({categories}: InferGetStaticPropsType<typeof getStaticProps>) {
 
     let { FileInput, openFileDialog, uploadToS3 } = useS3Upload();
 
@@ -13,6 +15,13 @@ export default function CreatePost() {
         content: string
         image: string
         catId: string
+        slug: string
+    }
+
+    interface category {
+        id: string
+        name: string
+        slug: string
     }
 
     // Initialize state for the post content and set type to postData
@@ -20,12 +29,12 @@ export default function CreatePost() {
         title: '',
         content: '',
         image: '',
-        catId: 'clnxu4kll0000lhecglqr630o',
+        catId: categories[0].id,
+        slug: '',
     })
 
-
     // input handler function
-    function inputHanlder(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) {
+    function inputHanlder(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) {
 
         const field: string = e.target.name
         const value: string = e.target.value
@@ -35,6 +44,15 @@ export default function CreatePost() {
             ...prevState,
             [field]: value,
         }));
+
+        if ( field == 'title' ){
+            const slug = value.replace(/[^a-zA-Z ]/g, "").replace(/\s+/g, '-').toLowerCase();
+
+            setPostData((prevState) => ({
+                ...prevState,
+                slug: slug
+            }));
+        }
     }
 
     // S3 image upload function
@@ -67,10 +85,20 @@ export default function CreatePost() {
         console.log(postData)
     }
 
+    const catOptions = categories.map((cat:category, index:number) => {
+        return (
+            <option value={cat.id} key={`${index}category`}>{cat.name}</option>
+        )
+    })
+
     return (
         <div className="createPost container" id="createPost">
 
             <input type="text" name="title" className="titleInput" placeholder="Post Title" onChange={(e) => inputHanlder(e)} />
+
+            <select name="catId" id="catId" onChange={(e) => inputHanlder(e)}>
+                {catOptions}
+            </select>
 
             <FileInput onChange={handleFileChange} />
 
@@ -89,3 +117,22 @@ export default function CreatePost() {
     )
 }
 
+
+export async function getStaticProps(){
+
+    const prisma = new PrismaClient()
+
+    const categoriesRaw = await prisma.postCategories.findMany({
+        select: {
+            id: true,
+            name: true,
+            slug: true,
+        }
+    })
+
+    const categories = JSON.parse(JSON.stringify(categoriesRaw))
+
+    return {
+        props: {categories}
+    }
+}

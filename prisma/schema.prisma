@@ -60,6 +60,7 @@ model Posts {
   title String
   content String @db.Text
   image String ?
+  slug String ?
   catId String ?
   category PostCategories ? @relation(fields: [catId], references: [id], onDelete: Cascade)
 
@@ -69,6 +70,7 @@ model Posts {
 model PostCategories {
   id String @id @default(cuid())
   name String
+  slug String ?
   posts Posts[]
 }
 
