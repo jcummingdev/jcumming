@@ -4,6 +4,7 @@ import { useS3Upload } from "next-s3-upload"
 import Tiptap from "@/components/admin/Tiptap";
 import { PrismaClient } from "@prisma/client";
 import { InferGetStaticPropsType } from "next";
+import Router, { useRouter } from "next/router";
 
 export default function CreatePost({categories}: InferGetStaticPropsType<typeof getStaticProps>) {
 
@@ -14,7 +15,7 @@ export default function CreatePost({categories}: InferGetStaticPropsType<typeof 
         title: string
         content: string
         image: string
-        catId: string
+        catSlug: string
         slug: string
     }
 
@@ -29,7 +30,7 @@ export default function CreatePost({categories}: InferGetStaticPropsType<typeof 
         title: '',
         content: '',
         image: '',
-        catId: categories[0].id,
+        catSlug: categories[0].slug,
         slug: '',
     })
 
@@ -73,11 +74,26 @@ export default function CreatePost({categories}: InferGetStaticPropsType<typeof 
         }));
     }
 
+    const router = useRouter()
+    function redirectAfterPost() {
+        console.log('redirect function is called')
+        router.push('/' + postData.catSlug + '/' + postData.slug)
+    }
+
     // Axios Post Article Function
     async function postArticle() {
-        let {data} = await axios.post('/api/blog/new-post', {
-            data: postData
-        })
+        try{
+            let {data} = await axios.post('/api/blog/new-post', {
+                data: postData
+            })            
+        } catch (err) {
+            console.log(err)
+        } finally {
+            redirectAfterPost()            
+        }
+
+
+
     }
 
     // debugging
@@ -87,7 +103,7 @@ export default function CreatePost({categories}: InferGetStaticPropsType<typeof 
 
     const catOptions = categories.map((cat:category, index:number) => {
         return (
-            <option value={cat.id} key={`${index}category`}>{cat.name}</option>
+            <option value={cat.slug} key={`${index}category`}>{cat.name}</option>
         )
     })
 
