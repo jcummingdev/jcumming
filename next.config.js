@@ -11,9 +11,9 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'assets.example.com',
+        hostname: 'jcumming.s3.us-east-2.amazonaws.com',
         port: '',
-        pathname: '/account123/**',
+        pathname: '/**',
       },
     ],
   },

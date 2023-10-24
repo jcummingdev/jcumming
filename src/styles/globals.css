@@ -277,6 +277,7 @@ footer::before{
 
 .createPost{
   margin-top: 120px;
+  max-width: 1100px;
 }
 
 .postEditor{
@@ -332,8 +333,68 @@ footer::before{
   display: block;
 }
 
+.validationError{
+  display: block;
+  background: rgb(228, 107, 107);
+  text-align: center;
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.postTop{
+  background: #f1f1f1;
+  padding: 50px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.25); 
+  display: flex;
+  gap: 50px;
+  justify-content: center;
+}
+
+.postTopContent{
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.featuredImage{
+  width: 500px;
+  height: 300px;
+  border-radius: 5px;
+  border: 3px solid #444;
+  flex-shrink: 0;
+  position: relative;
+  background: white;
+  overflow: hidden;
+}
+
+.uploadFeaturedImage{
+  padding: 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  background: black;
+}
+
 .titleInput{
-  font-size: 2rem;
+  font-size: 1rem;
+  padding: 10px;
+}
+
+.postTopContent label{
+  display: flex;
+}
+
+.postTopContent label select{
+  width: 100%;
+  font-size: 1rem;
+  padding: 0px 10px;
 }
 
 

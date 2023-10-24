@@ -5,6 +5,7 @@ import Tiptap from "@/components/admin/Tiptap";
 import { PrismaClient } from "@prisma/client";
 import { InferGetStaticPropsType } from "next";
 import Router, { useRouter } from "next/router";
+import Img from 'next/image'
 
 export default function CreatePost({categories}: InferGetStaticPropsType<typeof getStaticProps>) {
 
@@ -126,9 +127,9 @@ export default function CreatePost({categories}: InferGetStaticPropsType<typeof 
     }
 
     // debugging
-    function logData() {
-        console.log(postData)
-    }
+    // function logData() {
+    //     console.log(postData)
+    // }
 
     // generate the category dropdown options
     const catOptions = categories.map((cat:category, index:number) => {
@@ -139,36 +140,39 @@ export default function CreatePost({categories}: InferGetStaticPropsType<typeof 
 
     return (
         <div className="createPost container" id="createPost">
-
-            {
-                error? (
-                    <div className="validationError">
-                        <h2>{error}</h2>
-                    </div>                    
-                )
-                : 
-                <></>
-            }
-
-
-            <input type="text" name="title" className="titleInput" placeholder="Post Title" onChange={(e) => inputHanlder(e)} />
-
-            <select name="catId" id="catId" onChange={(e) => inputHanlder(e)}>
-                {catOptions}
-            </select>
-
-            <FileInput onChange={handleFileChange} />
-
-            <button onClick={openFileDialog}>Upload file</button>
-
-            {postData.image && <img src={postData.image} alt="blogImage"/>}
+            <div className="postTop">
+                <div className="featuredImage">
+                    {postData.image && <Img src={postData.image} fill={true} style={{objectFit: 'cover'}} alt="blogImage"/>}
+                </div>
+                <div className="postTopContent">
+                    <h1>Create New Post</h1>
+                    <input type="text" name="title" className="titleInput" placeholder="Post Title" onChange={(e) => inputHanlder(e)} />
+                    <label>
+                        Select a Category
+                        <select name="catId" id="catId" onChange={(e) => inputHanlder(e)}>
+                            {catOptions}
+                        </select>                       
+                    </label>
+                    <FileInput onChange={handleFileChange} />
+                    <button className="uploadFeaturedImage" onClick={openFileDialog}>Upload Featured Image</button>
+                    {
+                        error? (
+                            <div className="validationError">
+                                <span>{error}</span>
+                            </div>                    
+                        )
+                        : 
+                        <></>
+                    }
+                </div>
+            </div>
 
             <Tiptap
                 updater={changeContent}
             />
 
-            <button onClick={postArticle} className="postArticle" style={loading? {background: '#444'} : {background: '#000'}}>{loading? <span>loading... </span> : <span>Post Article</span>}</button>
-            <button onClick={logData}>log data</button>
+            <button onClick={postArticle} className="postArticle" style={loading? {background: '#444'} : {background: '#000'}}>{loading? <Img src='/dots-loading-animation.gif' width={50} height={16} alt="loading"/> : <span>Post Article</span>}</button>
+            {/* <button onClick={logData}>log data</button> */}
 
         </div>
     )
