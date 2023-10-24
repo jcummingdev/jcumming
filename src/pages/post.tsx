@@ -8,9 +8,12 @@ import Router, { useRouter } from "next/router";
 
 export default function CreatePost({categories}: InferGetStaticPropsType<typeof getStaticProps>) {
 
+    // initialize s3 dependencies
     let { FileInput, openFileDialog, uploadToS3 } = useS3Upload();
 
+    // initialize error and loading states
     const [error, setError] = useState()
+    const [loading, setLoading] = useState(false)
 
     // Initialize types for postData
     interface postData {
@@ -21,6 +24,7 @@ export default function CreatePost({categories}: InferGetStaticPropsType<typeof 
         slug: string
     }
 
+    // initialize types for category
     interface category {
         id: string
         name: string
@@ -48,6 +52,7 @@ export default function CreatePost({categories}: InferGetStaticPropsType<typeof 
             [field]: value,
         }));
 
+        // if field is title, create URL string from title and add to postData
         if ( field == 'title' ){
             const slug = value.replace(/[^a-zA-Z ]/g, "").replace(/\s+/g, '-').toLowerCase();
 
@@ -69,6 +74,7 @@ export default function CreatePost({categories}: InferGetStaticPropsType<typeof 
         }))
     };
 
+    // handle tiptap content
     function changeContent(incomingHTML:string) {
         setPostData((prevContent) => ({
             ...prevContent,
@@ -76,6 +82,7 @@ export default function CreatePost({categories}: InferGetStaticPropsType<typeof 
         }));
     }
 
+    // redirection function to fire after post succeeds
     const router = useRouter()
     function redirectAfterPost() {
         router.push('/' + postData.catSlug + '/' + postData.slug)
@@ -83,15 +90,29 @@ export default function CreatePost({categories}: InferGetStaticPropsType<typeof 
 
     // Axios Post Article Function
     async function postArticle() {
+
+        // if post is already loading, disable function
+        if (loading){
+            return
+        }
+
+        // If not already loading, set loading status to true
+        setLoading(true)
+
+        // run validation API
         let {data} = await axios.post('/api/blog/validate-post', {
             data: postData
         })
 
+        // if validation fails (caPost is false from API)
         if (!data.canPost) {
+            // set error message, set loading false, return without posting
             setError(data.message)
+            setLoading(false)
             return
         }
 
+        // if validation succeeds
         try{
             let {data} = await axios.post('/api/blog/new-post', {
                 data: postData
@@ -99,7 +120,8 @@ export default function CreatePost({categories}: InferGetStaticPropsType<typeof 
         } catch (err) {
             console.log(err)
         } finally {
-            redirectAfterPost()            
+            setLoading(false)
+            redirectAfterPost()
         }
     }
 
@@ -108,6 +130,7 @@ export default function CreatePost({categories}: InferGetStaticPropsType<typeof 
         console.log(postData)
     }
 
+    // generate the category dropdown options
     const catOptions = categories.map((cat:category, index:number) => {
         return (
             <option value={cat.slug} key={`${index}category`}>{cat.name}</option>
@@ -144,7 +167,7 @@ export default function CreatePost({categories}: InferGetStaticPropsType<typeof 
                 updater={changeContent}
             />
 
-            <button onClick={postArticle} className="postArticle">Post Article</button>
+            <button onClick={postArticle} className="postArticle" style={loading? {background: '#444'} : {background: '#000'}}>{loading? <span>loading... </span> : <span>Post Article</span>}</button>
             <button onClick={logData}>log data</button>
 
         </div>

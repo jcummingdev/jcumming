@@ -87,15 +87,20 @@ export async function getStaticProps({ params }:Params) {
         }
     })
 
-    const postData = JSON.parse(JSON.stringify(postRaw[0]))
-
-    return {
-        props: {
-            postData,
-            key: postData.id
-        },
-        revalidate: 10,
+    if (postRaw[0]) {
+        const postData = JSON.parse(JSON.stringify(postRaw[0]))
+        
+        return {
+            props: {
+                postData,
+                key: postData.id
+            },
+            revalidate: 10,
+        }        
     }
+
+
+
 }
 
 export default function postPage ({ postData }:InferGetStaticPropsType<typeof getStaticProps>) {
