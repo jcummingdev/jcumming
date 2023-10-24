@@ -178,7 +178,7 @@ export default function CreatePost({categories}: InferGetStaticPropsType<typeof 
     )
 }
 
-
+// pull categories from database to propogate select options
 export async function getStaticProps(){
 
     const prisma = new PrismaClient()
@@ -191,9 +191,16 @@ export async function getStaticProps(){
         }
     })
 
+    // close prisma connection
+    prisma.$disconnect
+
+    // make the JSON result from prisma usable
     const categories = JSON.parse(JSON.stringify(categoriesRaw))
 
     return {
-        props: {categories}
+        props: {
+            categories
+        }, 
+        revalidate: 10
     }
 }
