@@ -372,6 +372,17 @@ footer::before{
   overflow: hidden;
 }
 
+.featuredImage span{
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  background: rgba(0,0,0,0.8);
+  color: white;
+  top: 0px;
+  padding: 2px;
+  font-size: .8rem;
+}
+
 .uploadFeaturedImage{
   padding: 10px;
   font-size: 1rem;

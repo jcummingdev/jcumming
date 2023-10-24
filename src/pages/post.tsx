@@ -4,7 +4,7 @@ import { useS3Upload } from "next-s3-upload"
 import Tiptap from "@/components/admin/Tiptap";
 import { PrismaClient } from "@prisma/client";
 import { InferGetStaticPropsType } from "next";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import Img from 'next/image'
 
 export default function CreatePost({categories}: InferGetStaticPropsType<typeof getStaticProps>) {
@@ -143,6 +143,7 @@ export default function CreatePost({categories}: InferGetStaticPropsType<typeof 
             <div className="postTop">
                 <div className="featuredImage">
                     {postData.image && <Img src={postData.image} fill={true} style={{objectFit: 'cover'}} alt="blogImage"/>}
+                    <span>Featured Image Preview</span>
                 </div>
                 <div className="postTopContent">
                     <h1>Create New Post</h1>
