@@ -10,6 +10,8 @@ export default function CreatePost({categories}: InferGetStaticPropsType<typeof 
 
     let { FileInput, openFileDialog, uploadToS3 } = useS3Upload();
 
+    const [error, setError] = useState()
+
     // Initialize types for postData
     interface postData {
         title: string
@@ -76,12 +78,20 @@ export default function CreatePost({categories}: InferGetStaticPropsType<typeof 
 
     const router = useRouter()
     function redirectAfterPost() {
-        console.log('redirect function is called')
         router.push('/' + postData.catSlug + '/' + postData.slug)
     }
 
     // Axios Post Article Function
     async function postArticle() {
+        let {data} = await axios.post('/api/blog/validate-post', {
+            data: postData
+        })
+
+        if (!data.canPost) {
+            setError(data.message)
+            return
+        }
+
         try{
             let {data} = await axios.post('/api/blog/new-post', {
                 data: postData
@@ -91,9 +101,6 @@ export default function CreatePost({categories}: InferGetStaticPropsType<typeof 
         } finally {
             redirectAfterPost()            
         }
-
-
-
     }
 
     // debugging
@@ -109,6 +116,17 @@ export default function CreatePost({categories}: InferGetStaticPropsType<typeof 
 
     return (
         <div className="createPost container" id="createPost">
+
+            {
+                error? (
+                    <div className="validationError">
+                        <h2>{error}</h2>
+                    </div>                    
+                )
+                : 
+                <></>
+            }
+
 
             <input type="text" name="title" className="titleInput" placeholder="Post Title" onChange={(e) => inputHanlder(e)} />
 
