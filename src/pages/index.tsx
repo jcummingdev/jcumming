@@ -3,52 +3,71 @@ import Blog from '@/components/home/blog'
 import Portfolio from '@/components/home/portfolio'
 import Contact from '@/components/home/contact'
 import IntroPanel from '@/components/home/panel1'
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useContext} from 'react'
+import { PrismaClient } from "@prisma/client";
+import { InferGetStaticPropsType } from "next";
+import PreLoader from "@/components/home/preloader";
+import { useAppContext } from "@/components/template/appContext";
 
+export default function Home ({ postData }:InferGetStaticPropsType<typeof getStaticProps>) {
 
-export default function Home (props:any) {
+  const [scrollPos, setScrollPos] = useState<number>(0)
+  const [preLoaderActive, setPreLoaderActive] = useState<boolean>(true)
+
+  const globalState = useAppContext()
 
   useEffect(() => {
-    let viewportHeight = window.innerHeight
-
-    window.addEventListener('mousewheel', function(event){
-      event.preventDefault()
+    window.addEventListener('scroll', () => {
+      setScrollPos(window.scrollY)
     })
-
-    window.addEventListener('scrollend', () => {
-      let panel = Math.round(window.scrollY / viewportHeight)
-      let scrollTarget = panel * viewportHeight
-
-      window.scrollTo({
-        top:  scrollTarget,
-        left: 0,
-        behavior: 'smooth',
-      })
-
-      if (panel == 1) {
-        document.documentElement.classList.add('darkMode')
-      } else {
-        document.documentElement.classList.remove('darkMode')
-      }
-      
-      setTimeout(() => {
-        window.scrollTo({
-          top:  scrollTarget,
-          left: 0,
-          behavior: 'instant',
-        }) 
-      }, 200);
-    })
-
   }, [])
   
-  
   return (
-    <div>
-      <IntroPanel />
-      <Portfolio />
-      <Blog />
-      <Contact />
-    </div>
+    <>
+      {
+        preLoaderActive && !globalState?.appLaunched? <PreLoader stateFunction={setPreLoaderActive}/> : (
+        <div>
+          <IntroPanel scrollPos={scrollPos}/>
+          <Portfolio scrollPos={scrollPos}/>
+          <Blog postData={postData}/>
+          <Contact />
+        </div>        
+        )
+      }    
+    </>
   )
+}
+
+export async function getStaticProps() {
+
+  const prisma = new PrismaClient
+
+  const postsRaw = await prisma.posts.findMany({
+    select: {
+      id: true,
+      title: true,
+      image: true,
+      postDate: true,
+      slug: true,
+      category: {
+        select: {
+          name: true,
+          slug: true
+        }
+      }
+    },
+    orderBy: {
+      postDate: 'desc',
+    },
+    take: 5
+  })
+
+  const postData = JSON.parse(JSON.stringify(postsRaw))
+
+  return {
+    props: {
+      postData,
+      key: postData[0].id
+    }
+  }
 }

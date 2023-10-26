@@ -1,15 +1,23 @@
 import Footer from './footer'
 import Header from './header'
+import { useAppContext } from './appContext'
+import { ReactNode } from 'react'
 
-export default function layout (props:any) {
+interface ChildrenProps {
+  children?: ReactNode
+}
+
+export default function Layout ({ children }: ChildrenProps) {
+
+  const globalState = useAppContext()
+
   return (
-    <>
+    <div className={globalState?.darkMode? 'darkMode' : ''}>
       <Header />
       <main>
-        { props.children }
+        { children }
       </main>
       <Footer />
-    </>
-
+    </div>
   )
 }

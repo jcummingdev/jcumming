@@ -200,7 +200,8 @@ export async function getStaticProps(){
 
     return {
         props: {
-            categories
+            categories,
+            key: categories[0].id,
         }, 
         revalidate: 10
     }

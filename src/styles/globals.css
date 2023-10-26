@@ -40,6 +40,7 @@ body {
   font-family: 'Inter', sans-serif;
   font-weight: 300;
   transition: .3s ease;
+  scroll-behavior: smooth;
 }
 
 h1, h2, h3, h4, h5{
@@ -96,6 +97,7 @@ header{
   top: 0px;
   transition: .3s ease;
   z-index: 2;
+  z-index: 9;
 }
 
 .scrollStyle{
@@ -154,7 +156,7 @@ nav ul{
   background: transparent;
   border: none;
   cursor: pointer;
-  z-index: 9;
+  z-index: 9999;
 }
 
 .menuTrigger span{
@@ -249,6 +251,36 @@ footer::before{
     display: none;
   }
 }
+
+/* loader  */
+
+#nprogress{
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 8;
+  width: 100%;
+  height: 100%;
+  background: white;
+  transition: .3s ease;
+}
+
+#nprogress .spinner {
+  display: block;
+  position: fixed;
+  z-index: 1031;
+  top: calc(50% - 30px)  !important;
+  right: calc(50% - 30px)  !important;
+}
+
+#nprogress .spinner-icon {
+  width: 60px !important;
+  height: 60px !important;
+  border: solid 5px transparent !important;
+  border-top-color: black !important;
+  border-left-color: black !important
+}
+
 
 
 /* dark mode  */
@@ -408,13 +440,93 @@ footer::before{
   padding: 0px 10px;
 }
 
+/* pre loader  */
+
+.preLoader {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: 9;
+  background: white;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.preLoaderElements {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  max-width: 500px;
+  width: 100%;
+  margin: 0px auto;
+  gap: 30px;
+}
+
+.typeBox {
+  border-radius: 8px;
+  border: 3px solid #ccc;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.typeElement{
+  display: flex;
+  gap: 5px;
+}
+
+@keyframes flash {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.textCursor{
+  background: black;
+  width: 3px;
+  height: 40px;
+  animation: flash 1s infinite;
+}
+
+.typeBox button {
+  border: 3px solid rgb(117, 208, 238);
+  padding: 0px 20px;
+  background: transparent;
+  color: rgb(117, 208, 238);
+  font-weight: 700;
+  border-radius: 5px;
+  cursor: pointer;
+  opacity: 0;
+  transition: .3s ease;
+}
+
+.typeBox span{
+  font-family: 'Pixelify Sans', sans-serif;
+  font-size: 2rem;
+}
+
 
 /* home panel styling  */
 
 .introPanel{
+  padding-top: 250px;
+  height: 1500px;
+  position:relative;
+}
+
+.introContent{
+  position: fixed;
+  left: 0px; 
+  right: 0px;
+  z-index: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  gap: 20px;
+  transition: 1s ease;
 }
 
 .introHead{
@@ -422,10 +534,45 @@ footer::before{
   font-weight: 300;
   font-family: 'inter', sans-serif;
   margin-bottom: 50px;
+  text-align: center;
 }
 
+@keyframes arrowAnim {
+  0% { transform: translate(0, -60px); opacity: .3; }
+  50% { transform: translate(0, -40px); opacity: .8;}
+  100% { transform: translate(0, -60px); opacity: .3;}
+}
+
+.scrollDownButton{
+  margin: 0px auto;
+  display: block;
+  font-size: 5rem;
+  width: 75px;
+  height: 75px;
+  padding: 20px;
+  position: relative;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transform: translate(0, -60px);
+  z-index: 1;
+  cursor: pointer;
+  animation-name: arrowAnim;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+}
+
+.scrollDownButton svg{
+  opacity: .7;
+}
+
+.introContent span{
+  text-align: center;
+} 
+
 .introHead span {
-  font-size: 8rem;
+  font-size: 15rem;
   display: block;
   margin: 20px;
   font-weight: 700;
@@ -433,3 +580,23 @@ footer::before{
 
 /* portfolio panel  */
 
+.portfolioPanel{
+  z-index: 2;
+  position: relative;
+  height: 2000px;
+}
+
+/* blog panel  */
+
+.blogPanel{
+  background: white;
+  position: relative;
+}
+
+/* contact panel  */
+
+.contactPanel{
+  background: white;
+  position: relative;
+  height: 500px;
+}
