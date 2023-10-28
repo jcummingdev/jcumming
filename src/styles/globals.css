@@ -91,7 +91,7 @@ main{
 }
 
 header{
-  background: white;
+  background: transparent;
   position: fixed;
   width: 100%;
   top: 0px;
@@ -102,6 +102,7 @@ header{
 
 .scrollStyle{
   box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.15);
+  background: white;
 }
 
 .staticStyle{
@@ -134,6 +135,11 @@ nav ul{
   list-style: none;
   display: flex;
   gap: 40px;
+}
+
+nav ul li{
+  font-family: 'Pixelify Sans', sans-serif;
+  cursor: pointer;
 }
 
 .tagline{
@@ -513,9 +519,41 @@ footer::before{
 /* home panel styling  */
 
 .introPanel{
-  padding-top: 250px;
+  padding-top: 350px;
   height: 1500px;
   position:relative;
+}
+
+#layer4{
+  position: absolute;
+  z-index: -1;
+  background: transparent;
+  top: 0px;
+}
+
+#layer3{
+  position: absolute;
+  z-index: -1;
+  background: transparent;
+  top: 0px;
+}
+#layer2{
+  position: absolute;
+  z-index: -1;
+  background: transparent;
+  top: 0px;
+}
+#layer1{
+  position: absolute;
+  z-index: -1;
+  background: transparent;
+  top: 0px;
+}
+#backgroundLayer{
+  position: absolute;
+  z-index: -1;
+  background: transparent;
+  top: 0px;
 }
 
 .introContent{
@@ -527,6 +565,9 @@ footer::before{
   flex-direction: column;
   gap: 20px;
   transition: 1s ease;
+  max-width: 1800px;
+  width: 95%;
+  margin: 0px auto;
 }
 
 .introHead{
@@ -534,7 +575,8 @@ footer::before{
   font-weight: 300;
   font-family: 'inter', sans-serif;
   margin-bottom: 50px;
-  text-align: center;
+  text-align: left;
+  position: relative;
 }
 
 @keyframes arrowAnim {
@@ -567,14 +609,11 @@ footer::before{
   opacity: .7;
 }
 
-.introContent span{
-  text-align: center;
-} 
+
 
 .introHead span {
-  font-size: 15rem;
+  font-size: 8rem;
   display: block;
-  margin: 20px;
   font-weight: 700;
 }
 

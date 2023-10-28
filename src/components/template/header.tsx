@@ -5,7 +5,6 @@ import { useSession, signIn, signOut } from "next-auth/react"
 export default function Header () {
 
   const { data: session, status } = useSession()
-
   const [navStyle, setNavStyle] = useState('staticStyle')
 
   useEffect(() => {
@@ -40,11 +39,17 @@ export default function Header () {
             <nav className="nav">
               <ul>
                 <li><Link href='/#home'>Home</Link></li>
-                <li><Link href='/#portfolio'>Portfolio</Link></li>
+                <li><Link href='/portfolio'>Portfolio</Link></li>
                 <li><Link href='/#blog'>Blog</Link></li>
                 <li><Link href='/#contact'>Contact</Link></li>
                 {
-                  status === 'authenticated'? <li><Link href='/post'>New Post</Link></li> : <></>
+                  status === 'authenticated'? 
+                  <>
+                    <li><Link href='/post'>New Post</Link></li>
+                    <li><span onClick={() => signOut()}>Sign out</span></li>                  
+                  </>
+                  : 
+                  <li><span onClick={() => signIn()}>Sign In</span></li>                  
                 }
               </ul>
             </nav>
@@ -62,13 +67,18 @@ export default function Header () {
         <nav>
           <ul>
             <li><Link href='/#home' onClick={menuToggle}>Home</Link></li>
-                <li><Link href='/#portfolio' onClick={menuToggle}>Portfolio</Link></li>
+                <li><Link href='/portfolio' onClick={menuToggle}>Portfolio</Link></li>
                 <li><Link href='/#blog' onClick={menuToggle}>Blog</Link></li>
                 <li><Link href='/#contact' onClick={menuToggle}>Contact</Link></li>
                 {
-                  status === 'authenticated'? <li><Link href='/post' onClick={menuToggle}>New Post</Link></li> : <></>
-                }
-          </ul>
+                  status === 'authenticated'? 
+                  <>
+                    <li><Link href='/post' onClick={menuToggle}>New Post</Link></li>
+                    <li><span onClick={() => signOut()}>Sign out</span></li>                  
+                  </>
+                  : 
+                  <li><span onClick={() => signIn()}>Sign In</span></li>                  
+                }          </ul>
         </nav>
         <div>
            <div className='sideCopyright'>

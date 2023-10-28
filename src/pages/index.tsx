@@ -1,6 +1,4 @@
-import LoginWidget from "@/components/template/login-btn";
 import Blog from '@/components/home/blog'
-import Portfolio from '@/components/home/portfolio'
 import Contact from '@/components/home/contact'
 import IntroPanel from '@/components/home/panel1'
 import {useState, useEffect, useContext} from 'react'
@@ -28,7 +26,6 @@ export default function Home ({ postData }:InferGetStaticPropsType<typeof getSta
         preLoaderActive && !globalState?.appLaunched? <PreLoader stateFunction={setPreLoaderActive}/> : (
         <div>
           <IntroPanel scrollPos={scrollPos}/>
-          <Portfolio scrollPos={scrollPos}/>
           <Blog postData={postData}/>
           <Contact />
         </div>        
