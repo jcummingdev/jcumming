@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { clickHandler } from "./Classes/character"
+import { clickHandler, dataArray, generateDataObjects, loop } from "./Classes/character"
 
 type ComponentProps = {
   scrollPos: number
@@ -53,22 +53,23 @@ export default function IntroPanel(props:ComponentProps) {
     backgroundLayer.height = window.innerHeight
     backgroundLayer.style.background = '#ff8';
 
-    const l4 = layer4.getContext('2d');
-    const l3 = layer3.getContext('2d');
-    const l2 = layer2.getContext('2d');
-    const l1 = layer1.getContext('2d');
-    const bg = backgroundLayer.getContext('2d');
+    generateDataObjects();
 
     let clickCount = 0;
 
+    window.requestAnimationFrame(loop)
+
     document.getElementById('home')!.addEventListener('click', (e) => {
 
-      clickCount ++; 
+      clickCount ++;
+      if (clickCount % 5 == 0){
+        clickCount++
+      }
       let cursorX = e.pageX
       let cursorY = e.pageY
 
-      if (bg && l1 && l2 && l3 && l4){
-        clickHandler(clickCount, cursorX, cursorY, bg, l1, l2, l3, l4);
+      if (dataArray[0].context && dataArray[1].context && dataArray[2].context && dataArray[3].context && dataArray[4].context){
+        clickHandler(clickCount, cursorX, cursorY);
       }
     })
 
