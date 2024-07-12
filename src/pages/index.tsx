@@ -9,7 +9,7 @@ import { InferGetStaticPropsType } from "next";
 import PreLoader from "@/components/home/preloader";
 import { useAppContext } from "@/components/template/appContext";
 
-export default function Home ({ postData }:InferGetStaticPropsType<typeof getStaticProps>) {
+export default function Home ({ postData, portfolioItems }:InferGetStaticPropsType<typeof getStaticProps>) {
 
   const [scrollPos, setScrollPos] = useState<number>(0)
   const [preLoaderActive, setPreLoaderActive] = useState<boolean>(true)
@@ -28,7 +28,7 @@ export default function Home ({ postData }:InferGetStaticPropsType<typeof getSta
         preLoaderActive && !globalState?.appLaunched? <PreLoader stateFunction={setPreLoaderActive}/> : (
         <div>
           <IntroPanel scrollPos={scrollPos}/>
-          <Portfolio scrollPos={scrollPos}/>
+          <Portfolio scrollPos={scrollPos} portfolioItems={portfolioItems}/>
           <Blog postData={postData}/>
           <Contact />
         </div>        
@@ -62,12 +62,17 @@ export async function getStaticProps() {
     take: 5
   })
 
+  const portfolioItems = await prisma.portfolio.findMany({
+    take: 3
+  })
+
   if (postsRaw.length != 0) {
     const postData = JSON.parse(JSON.stringify(postsRaw))
 
     return {
       props: {
         postData,
+        portfolioItems,
         key: postData[0].id
       }
     }
@@ -75,7 +80,8 @@ export async function getStaticProps() {
 
   return {
     props: {
-      postData: null
+      postData: null,
+      portfolioItems,
     }
   }
 }

@@ -74,4 +74,17 @@ model PostCategories {
   posts Posts[]
 }
 
+model Portfolio {
+  id String @id @default(cuid())
+
+  name String
+  text String @db.Text
+
+  link String
+  image String
+
+  tech String @db.Text
+
+  type String
+}
 

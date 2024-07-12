@@ -598,6 +598,122 @@ footer::before{
   height: 2000px;
 }
 
+.portfolioItems {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.portfolioAdminOptions {
+  position: relative;
+}
+
+.portfolioAdminOptions .createNewItemToggle{
+  position: absolute;
+  top: 0px;
+  right: 50px;
+  background: rgba(255, 255, 255, 0.5);
+  border: none;
+  cursor: pointer;
+  font-size: 3rem;
+  border: 2px solid black;
+  height: 50px;
+  width: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  border-radius: 10px;
+  backdrop-filter: blur(2px);
+  z-index: 2;
+}
+
+.portfolioAdminOptions button span{
+  height: 48px;
+}
+
+.portfolioItem, .portfolioEditor {
+  display: flex;
+  width: 100%;
+}
+
+.uploadPortfolioImage {
+  position: relative;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.5);
+  border: 2px solid white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  border-radius: 10px;
+  backdrop-filter: blur(2px);
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 10px 20px;
+  color: white;
+}
+
+.portfolioImg {
+  width: 100%;
+  height: 600px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.portfolioContent {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 40px;
+  background: linear-gradient(77deg, rgba(0,0,0,1) 0%, rgba(60,60,60,1) 100%);
+}
+
+.portfolioContent h2 {
+  font-size: 2rem;
+  color: white;
+  font-family: 'Inter', sans-serif;
+}
+
+.portfolioContent form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.portfolioContent form button {
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid white;
+  background: transparent;
+  color: white;
+  font-size: 1.2rem;
+  max-width: 400px;
+  transition: .3s ease;
+}
+
+.portfolioContent form button:hover {
+  background: white;
+  color: black;
+}
+
+.portfolioContent input, .portfolioContent textarea {
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid white;
+  background: transparent;
+  color: white;
+  font-size: 1.2rem;
+  font-family: 'Inter', sans-serif;
+}
+
+
 /* blog panel  */
 
 .blogPanel{

@@ -1,18 +1,33 @@
-import {useEffect} from 'react'
+import { useEffect } from 'react'
 import Img from 'next/image'
+import { useSession } from "next-auth/react"
+import { useState } from 'react'
+import { FiPlus, FiX } from 'react-icons/fi'
+import Tiptap from '../admin/Tiptap'
+import { useS3Upload } from 'next-s3-upload'
+import axios from 'axios'
+import nProgress from 'nprogress'
+
 
 type ComponentProps = {
   scrollPos: number
 }
 
-export default function Portfolio(props:ComponentProps) {
+export default function Portfolio({ scrollPos, portfolioItems } : { scrollPos: number, portfolioItems: Array<object>} ) {
+
+  let { FileInput, openFileDialog, uploadToS3 } = useS3Upload();
+
+  const [Items, setItems] = useState(portfolioItems)
+  const [isDarkMode, setIsDarkMode] = useState(false)
+  const [createNewItem, setCreateNewItem] = useState(false)
+  const [newItem, setNewItem] = useState({name: '', text: '', link: '', image: '', tech: '', type: ''})
 
   // useEffect(() => {
   //   var viewportOffset = document.getElementById('portfolio')!.getBoundingClientRect()
   //   var top = viewportOffset.top + window.innerHeight
   //   var bottom = viewportOffset.bottom
 
-    
+
   //   window.addEventListener('scroll', () => {
   //     if ((top < props.scrollPos) && (bottom > 200)) {
   //       document.documentElement.classList.add('darkMode')
@@ -23,13 +38,102 @@ export default function Portfolio(props:ComponentProps) {
 
 
   // }, [props.scrollPos])
-  
-  
-  return(
+
+  const { data: session, status } = useSession()
+
+  const portfolioShowcase = Items.map((item, index) => {
+    return (
+      <div className='portfolioItem'>
+        <div className='portfolioImg'>
+
+        </div>
+        <div className='portfolioContent'>
+
+        </div>
+      </div>
+    )
+  })
+
+  function togglePortoflioEditor() {
+    setCreateNewItem(!createNewItem)
+  }
+
+  function inputHandler(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) {
+    setNewItem({
+      ...newItem,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  let handleFileChange = async (file: File) => {
+    nProgress.start()
+
+    let { url } = await uploadToS3(file);
+
+    // Add the image url to the postData object
+    setNewItem((prevState) => ({
+        ...prevState,
+        image: url
+    }))
+
+    nProgress.done()
+  }
+
+  async function submitChanges() {
+    nProgress.start()
+    let res = axios.post('/api/createPortfolioItem', {
+      data: newItem
+    })
+
+    console.log(res)
+
+    setItems([newItem, ...Items])
+    togglePortoflioEditor()
+    setNewItem({name: '', text: '', link: '', image: '', tech: '', type: ''})
+
+    nProgress.done()
+  }
+
+
+  return (
     <div className='portfolioPanel panel' id='portfolio'>
       <div className="container">
         <h1 className="introHead">This is my <span>Portfolio</span></h1>
       </div>
+      <div className='portfolioItems'>
+        {
+          status === 'authenticated' ? 
+          <div className='portfolioAdminOptions'>
+            <button onClick={togglePortoflioEditor} className='createNewItemToggle'><span style={createNewItem ? {rotate: '45deg'} : {}}><FiPlus /></span></button>
+            {
+              createNewItem ? 
+                <div className='portfolioEditor'>
+                  <div className='portfolioImg'>
+                    <Img src={newItem.image? newItem.image : 'https://placehold.co/1000x500'} alt="New Portfolio Item Image" fill={true} style={{objectFit: 'cover'}} />
+                    <FileInput onChange={handleFileChange} />
+                    <button className="uploadPortfolioImage" onClick={openFileDialog}>Upload Featured Image</button>
+                  </div>
+                  <div className='portfolioContent'>
+                    <h2>Create New Item</h2>
+                    <form onSubmit={submitChanges}>
+                      <input type="text" name='name' placeholder='Item Name' onChange={(e) => inputHandler(e)}/>
+                      <input type="text" name='type' placeholder='Item Type' onChange={(e) => inputHandler(e)}/>
+                      <textarea name="text" placeholder="Item Description" onChange={(e) => inputHandler(e)}></textarea>
+                      <input type="text" name='link' placeholder='Item Link' onChange={(e) => inputHandler(e)}/>
+                      <input type="text" name='tech' placeholder='Item Tech Stack' onChange={(e) => inputHandler(e)}/>
+                      <button type='submit'>Create</button>                      
+                    </form>
+
+                  </div>
+                </div>
+              : <></>
+            }
+          </div> 
+          : <></>
+        }
+      </div>
+
+      {portfolioShowcase}
     </div>
   )
 }
