@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useSession, signIn, signOut } from "next-auth/react"
+import { FaGithub, FaLinkedin } from 'react-icons/fa6'
+import { FiLogIn, FiLogOut } from 'react-icons/fi'
 
 export default function Header () {
 
@@ -46,11 +48,15 @@ export default function Header () {
                   status === 'authenticated'? 
                   <>
                     <li><Link href='/post'>New Post</Link></li>
-                    <li><span onClick={() => signOut()}>Sign out</span></li>                  
+                    <li><button onClick={() => signOut()}><FiLogOut /></button></li>                  
                   </>
                   : 
-                  <li><span onClick={() => signIn()}>Sign In</span></li>                  
+                  <li><button onClick={() => signIn('google')}><FiLogIn /></button></li>                  
                 }
+                <div className='socialMediaIcons'>
+                  <a href="https://github.com/sadxxface" target='_blank'><FaGithub /></a>
+                  <a href="https://www.linkedin.com/in/jrcumming/" target='_blank'><FaLinkedin /></a>
+                </div>
               </ul>
             </nav>
           </div>
@@ -74,14 +80,20 @@ export default function Header () {
                   status === 'authenticated'? 
                   <>
                     <li><Link href='/post' onClick={menuToggle}>New Post</Link></li>
-                    <li><span onClick={() => signOut()}>Sign out</span></li>                  
+                    <li><button onClick={() => signOut()}>Sign out</button></li>
                   </>
                   : 
-                  <li><span onClick={() => signIn()}>Sign In</span></li>                  
-                }          </ul>
+                  <li><button onClick={() => signIn('google')}>Sign In</button></li>
+                }
+            </ul>
         </nav>
+
         <div>
            <div className='sideCopyright'>
+           <div className='socialMediaIcons'>
+            <a href="https://github.com/sadxxface" target='_blank'><FaGithub /></a>
+            <a href="https://www.linkedin.com/in/jrcumming/" target='_blank'><FaLinkedin /></a>
+          </div>
              <p>Copyright 2023</p>
            </div>
         </div>
