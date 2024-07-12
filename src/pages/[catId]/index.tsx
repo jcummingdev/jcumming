@@ -64,14 +64,21 @@ export const getStaticProps: GetStaticProps = async (context) => {
         }
     })
 
-    const pageData = JSON.parse(JSON.stringify(catRaw[0]))
+    if (catRaw.length > 0) {
+        const pageData = JSON.parse(JSON.stringify(catRaw[0]))
 
-    return { 
-        props: { 
-            pageData,
-            key: pageData.id
-        },
-        revalidate: 10
+        return { 
+            props: { 
+                pageData,
+                key: pageData.id
+            },
+            revalidate: 10
+        }
+    }
+    return {
+        props: {
+            pageData: null
+        }
     }
   }
 

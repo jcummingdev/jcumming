@@ -62,12 +62,20 @@ export async function getStaticProps() {
     take: 5
   })
 
-  const postData = JSON.parse(JSON.stringify(postsRaw))
+  if (postsRaw.length != 0) {
+    const postData = JSON.parse(JSON.stringify(postsRaw))
+
+    return {
+      props: {
+        postData,
+        key: postData[0].id
+      }
+    }
+  }
 
   return {
     props: {
-      postData,
-      key: postData[0].id
+      postData: null
     }
   }
 }

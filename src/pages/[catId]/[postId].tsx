@@ -99,6 +99,12 @@ export async function getStaticProps({ params }:Params) {
         }        
     }
 
+    return {
+        props: {
+            postData: null
+        }
+    }
+
 
 
 }

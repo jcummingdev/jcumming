@@ -20,13 +20,21 @@ type props = {
 }
 
 export default function Blog(props:props) {
-  const posts = props.postData.map((post:post, index:number) => {
-    return (
-      <div className="post" key={post.id}>
-        <h2>{post.title}</h2>
-      </div>
-    )
-  })
+
+  let posts
+  if (props.postData) {
+    posts = props.postData.map((post:post, index:number) => {
+      return (
+        <div className="post" key={post.id}>
+          <h2>{post.title}</h2>
+        </div>
+      )
+    })    
+  }
+  else {
+    posts = <div>No posts</div>
+  }
+
 
 
   return (
