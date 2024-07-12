@@ -39,7 +39,7 @@ export default function Header () {
             <nav className="nav">
               <ul>
                 <li><Link href='/#home'>Home</Link></li>
-                <li><Link href='/portfolio'>Portfolio</Link></li>
+                <li><Link href='/#portfolio'>Portfolio</Link></li>
                 <li><Link href='/#blog'>Blog</Link></li>
                 <li><Link href='/#contact'>Contact</Link></li>
                 {
@@ -67,7 +67,7 @@ export default function Header () {
         <nav>
           <ul>
             <li><Link href='/#home' onClick={menuToggle}>Home</Link></li>
-                <li><Link href='/portfolio' onClick={menuToggle}>Portfolio</Link></li>
+                <li><Link href='/#portfolio' onClick={menuToggle}>Portfolio</Link></li>
                 <li><Link href='/#blog' onClick={menuToggle}>Blog</Link></li>
                 <li><Link href='/#contact' onClick={menuToggle}>Contact</Link></li>
                 {
