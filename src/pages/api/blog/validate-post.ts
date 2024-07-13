@@ -1,5 +1,6 @@
-import { PrismaClient } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
+
+import prisma from "@/lib/prisma";
 
 export default async function handler(req:NextApiRequest, res:NextApiResponse){
     if (req.method !== 'POST'){
@@ -50,8 +51,6 @@ export async function validate(postData: postData){
     }
 
     // all required fields have content, proceed to database validation
-
-    const prisma = new PrismaClient
 
     const postsRaw = await prisma.posts.findMany({
         select: {

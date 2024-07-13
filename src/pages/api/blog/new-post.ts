@@ -1,5 +1,5 @@
-import { PrismaClient } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next/types";
+import prisma from "@/lib/prisma";
 
 export default async function handler(req:NextApiRequest, res:NextApiResponse) {
     if (req.method !== 'POST') {
@@ -29,8 +29,6 @@ type postData = {
 // create new row in database with the values passed from axios on the new post page
 export async function createPost(postData:postData) {
 
-    const prisma = new PrismaClient
-
     const cat = postData.catSlug
 
     const category = await prisma.postCategories.findMany({
@@ -48,6 +46,4 @@ export async function createPost(postData:postData) {
             catId: category[0].id
         }
     })
-
-    await prisma.$disconnect()
 }

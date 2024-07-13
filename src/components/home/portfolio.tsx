@@ -28,7 +28,6 @@ export default function Portfolio({  portfolioItems } : { portfolioItems: Portfo
   let { FileInput, openFileDialog, uploadToS3 } = useS3Upload();
 
   const [Items, setItems] = useState(portfolioItems)
-  const [isDarkMode, setIsDarkMode] = useState(false)
   const [createNewItem, setCreateNewItem] = useState(false)
   const [newItem, setNewItem] = useState({name: '', text: '', link: '', image: '', tech: '', type: '', repo: null, completed: null})
 

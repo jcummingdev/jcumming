@@ -3,7 +3,6 @@ import Portfolio from '@/components/home/portfolio'
 import Contact from '@/components/home/contact'
 import IntroPanel from '@/components/home/panel1'
 import {useState, useEffect, useContext} from 'react'
-import { PrismaClient } from "@prisma/client";
 import { InferGetStaticPropsType } from "next";
 import PreLoader from "@/components/home/preloader";
 import { useAppContext } from "@/components/template/appContext";

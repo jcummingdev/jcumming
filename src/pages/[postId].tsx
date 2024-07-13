@@ -99,6 +99,14 @@ export async function getStaticProps({ params }:Params) {
 
 export default function postPage ({ postData }:InferGetStaticPropsType<typeof getStaticProps>) {
 
+    if (!postData) {
+        return (
+            <div>
+                <h1>Loading...</h1>
+            </div>
+        )
+    }
+
     return(
         <div className='singlePost'>
             <div className='postHeader'>
