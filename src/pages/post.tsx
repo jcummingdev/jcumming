@@ -2,10 +2,10 @@ import axios from "axios"
 import { useState } from "react"
 import { useS3Upload } from "next-s3-upload"
 import Tiptap from "@/components/admin/Tiptap";
-import { PrismaClient } from "@prisma/client";
 import { InferGetStaticPropsType } from "next";
 import { useRouter } from "next/router";
 import Img from 'next/image'
+import prisma from "@/lib/prisma";
 
 export default function CreatePost({categories}: InferGetStaticPropsType<typeof getStaticProps>) {
 
@@ -181,8 +181,6 @@ export default function CreatePost({categories}: InferGetStaticPropsType<typeof 
 
 // pull categories from database to propogate select options
 export async function getStaticProps(){
-
-    const prisma = new PrismaClient()
 
     const categoriesRaw = await prisma.postCategories.findMany({
         select: {

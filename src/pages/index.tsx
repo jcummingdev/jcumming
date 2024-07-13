@@ -1,4 +1,3 @@
-import LoginWidget from "@/components/template/login-btn";
 import Blog from '@/components/home/blog'
 import Portfolio from '@/components/home/portfolio'
 import Contact from '@/components/home/contact'
@@ -8,6 +7,7 @@ import { PrismaClient } from "@prisma/client";
 import { InferGetStaticPropsType } from "next";
 import PreLoader from "@/components/home/preloader";
 import { useAppContext } from "@/components/template/appContext";
+import prisma from '@/lib/prisma'
 
 export default function Home ({ postData, portfolioItems }:InferGetStaticPropsType<typeof getStaticProps>) {
 
@@ -58,8 +58,6 @@ export default function Home ({ postData, portfolioItems }:InferGetStaticPropsTy
 }
 
 export async function getStaticProps() {
-
-  const prisma = new PrismaClient
 
   const postsRaw = await prisma.posts.findMany({
     select: {

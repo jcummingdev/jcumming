@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+import prisma from '@/lib/prisma'
 import type { InferGetStaticPropsType, GetStaticPaths, } from 'next'
 
 type Params ={
@@ -9,8 +9,6 @@ type Params ={
 }
 
 export async function returnData() {
-
-    const prisma = new PrismaClient
 
     const postsRaw = await prisma.posts.findMany({
         select: {
@@ -61,8 +59,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export async function getStaticProps({ params }:Params) {
 
     const slug = params.postId
-
-    const prisma = new PrismaClient
 
     const postRaw = await prisma.posts.findMany({
         where: {

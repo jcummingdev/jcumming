@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+import prisma from '@/lib/prisma'
 import type { InferGetStaticPropsType, GetStaticProps, GetStaticPaths, } from 'next'
 import { ParsedUrlQuery } from 'querystring'
 
@@ -8,8 +8,6 @@ import { ParsedUrlQuery } from 'querystring'
 
 
 export async function returnData() {
-
-    const prisma = new PrismaClient
 
     const categoriesRaw = await prisma.postCategories.findMany() 
 
@@ -42,8 +40,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (context) => {
 
     const {slug} = context.params as IParams
-
-    const prisma = new PrismaClient
 
     const catRaw = await prisma.postCategories.findMany({
         where: {

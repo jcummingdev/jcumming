@@ -12,7 +12,7 @@ export default function Layout ({ children }: ChildrenProps) {
   const globalState = useAppContext()
 
   return (
-    <div className={globalState?.darkMode? 'darkMode' : ''}>
+    <div>
       <Header />
       <main>
         { children }

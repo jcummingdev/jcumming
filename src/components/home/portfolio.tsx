@@ -1,14 +1,12 @@
 import Img from 'next/image'
 import { useSession } from "next-auth/react"
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { FiPlus } from 'react-icons/fi'
-import Tiptap from '../admin/Tiptap'
 import { useS3Upload } from 'next-s3-upload'
 import axios from 'axios'
 import nProgress from 'nprogress'
 import Link from 'next/link'
 import { FaGithub, FaGlobe } from 'react-icons/fa6'
-import { useAppContext } from '../template/appContext'
 
 type ComponentProps = {
   scrollPos: number
