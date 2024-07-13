@@ -4,7 +4,6 @@ import type { InferGetStaticPropsType, GetStaticPaths, } from 'next'
 type Params ={
     params: {
         postId: string
-        catId: string
     }
 }
 
@@ -12,12 +11,6 @@ export async function returnData() {
 
     const postsRaw = await prisma.posts.findMany({
         select: {
-            category: {
-                select: {
-                    slug: true,
-                    id: true
-                }
-            }, 
             slug: true,
             title: true,
             id: true,
@@ -25,8 +18,6 @@ export async function returnData() {
     }) 
 
     const posts = JSON.parse(JSON.stringify(postsRaw))
-
-    await prisma.$disconnect()
 
     return {
         postData: posts
@@ -50,7 +41,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     const data = await returnData()
 
     const paths = data.postData.map((post:post) => (
-        { params: { postId: post.slug, catId: post.category.slug } }
+        { params: { postId: post.slug } }
     )) satisfies GetStaticPaths
 
     return {paths, fallback: 'blocking'}
