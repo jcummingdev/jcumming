@@ -610,7 +610,7 @@ footer::before{
 
 .portfolioAdminOptions .createNewItemToggle{
   position: absolute;
-  top: 0px;
+  top: 50px;
   right: 50px;
   background: rgba(255, 255, 255, 0.5);
   border: none;
@@ -636,6 +636,10 @@ footer::before{
 .portfolioItem, .portfolioEditor {
   display: flex;
   width: 100%;
+}
+
+.portfolioItem:nth-child(2n) {
+  flex-direction: row-reverse;
 }
 
 .uploadPortfolioImage {
@@ -667,11 +671,13 @@ footer::before{
 }
 
 .portfolioContent {
-  width: 100%;
+  width: 50%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 20px;
-  padding: 40px;
+  padding: 80px;
+  color: white;
   background: linear-gradient(77deg, rgba(0,0,0,1) 0%, rgba(60,60,60,1) 100%);
 }
 
@@ -709,7 +715,7 @@ footer::before{
   border: 2px solid white;
   background: transparent;
   color: white;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-family: 'Inter', sans-serif;
 }
 

@@ -13,7 +13,16 @@ type ComponentProps = {
   scrollPos: number
 }
 
-export default function Portfolio({ scrollPos, portfolioItems } : { scrollPos: number, portfolioItems: Array<object>} ) {
+type PortfolioItem = {
+  name: string
+  text: string
+  link: string
+  image: string
+  tech: string
+  type: string
+}
+
+export default function Portfolio({ scrollPos, portfolioItems } : { scrollPos: number, portfolioItems: PortfolioItem[]} ) {
 
   let { FileInput, openFileDialog, uploadToS3 } = useS3Upload();
 
@@ -40,19 +49,6 @@ export default function Portfolio({ scrollPos, portfolioItems } : { scrollPos: n
   // }, [props.scrollPos])
 
   const { data: session, status } = useSession()
-
-  const portfolioShowcase = Items.map((item, index) => {
-    return (
-      <div className='portfolioItem'>
-        <div className='portfolioImg'>
-
-        </div>
-        <div className='portfolioContent'>
-
-        </div>
-      </div>
-    )
-  })
 
   function togglePortoflioEditor() {
     setCreateNewItem(!createNewItem)
@@ -85,8 +81,6 @@ export default function Portfolio({ scrollPos, portfolioItems } : { scrollPos: n
       data: newItem
     })
 
-    console.log(res)
-
     setItems([newItem, ...Items])
     togglePortoflioEditor()
     setNewItem({name: '', text: '', link: '', image: '', tech: '', type: ''})
@@ -94,6 +88,22 @@ export default function Portfolio({ scrollPos, portfolioItems } : { scrollPos: n
     nProgress.done()
   }
 
+  const portfolioShowcase = Items.map((item, index) => {
+    return (
+      <div className='portfolioItem'>
+        <div className='portfolioImg'>
+          <Img src={item.image? item.image : 'https://placehold.co/1000x500'} alt="Portfolio Image" fill={true} style={{objectFit: 'cover'}} />
+        </div>
+        <div className='portfolioContent'>
+          <h2>{item.name}</h2>
+          <p>{item.type}</p>
+          <p>{item.text}</p>
+          <h4>Tech Used: {item.tech}</h4>
+          <a href={item.link} target="_blank" rel="noreferrer">{item.link}</a>
+        </div>
+      </div>
+    )
+  })
 
   return (
     <div className='portfolioPanel panel' id='portfolio'>
@@ -114,7 +124,6 @@ export default function Portfolio({ scrollPos, portfolioItems } : { scrollPos: n
                     <button className="uploadPortfolioImage" onClick={openFileDialog}>Upload Featured Image</button>
                   </div>
                   <div className='portfolioContent'>
-                    <h2>Create New Item</h2>
                     <form onSubmit={submitChanges}>
                       <input type="text" name='name' placeholder='Item Name' onChange={(e) => inputHandler(e)}/>
                       <input type="text" name='type' placeholder='Item Type' onChange={(e) => inputHandler(e)}/>
