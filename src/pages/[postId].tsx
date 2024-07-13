@@ -1,5 +1,6 @@
 import prisma from '@/lib/prisma'
 import type { InferGetStaticPropsType, GetStaticPaths, } from 'next'
+import Img from 'next/image'
 
 type Params ={
     params: {
@@ -99,8 +100,25 @@ export async function getStaticProps({ params }:Params) {
 export default function postPage ({ postData }:InferGetStaticPropsType<typeof getStaticProps>) {
 
     return(
-        <div className='container' style={{marginTop: '150px'}}>
-            <h1>{postData.title}</h1>
+        <div className='singlePost'>
+            <div className='postHeader'>
+                <Img src={postData.image} fill={true} alt='blog image' style={{objectFit: 'cover', zIndex: -1}} />
+                <div className="gradientOverlay">
+                    <div className='container'>
+                        <div className='postMeta'>
+                            <p>Posted {new Date(postData.postDate).toDateString().split('T')[0]} in </p>
+                            <p><strong>{postData.category.name}</strong></p>
+                        </div>
+                        <h1>{postData.title}</h1>
+                    </div>
+
+                </div>
+            </div>
+            <div className='container postContent' style={{padding: '20px 0px'}}>
+                <div dangerouslySetInnerHTML={{__html: postData.content}} />
+            </div>
+            
         </div>
+
     )
 }
