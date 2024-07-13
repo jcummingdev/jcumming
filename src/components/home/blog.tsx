@@ -1,5 +1,7 @@
 import Link from "next/dist/client/link"
 import Img from 'next/image'
+import { useState } from "react"
+import { FaArrowRight } from "react-icons/fa6"
 
 type category ={
   name: string
@@ -13,21 +15,22 @@ type post = {
   postDate: string
   slug: string
   category: category
+  content: string
 }
 
-type props = {
-  postData: [post]
-}
+export default function Blog({ postData } : {postData: post[]}) {
 
-export default function Blog(props:props) {
+  const [activeIndex, setActiveIndex] = useState(0)
 
   let posts
-  if (props.postData) {
-    posts = props.postData.map((post:post, index:number) => {
+  if (postData) {
+    posts = postData.map((post:post, index:number) => {
       return (
-        <div className="post" key={post.id}>
+        <button className={`postPreviewSelect ${index === activeIndex ? 'active' : ''}`} key={post.id} onClick={() => setActiveIndex(index)}>
           <h2>{post.title}</h2>
-        </div>
+          <p>{post.category.name}</p>
+          <p className="postPreview" dangerouslySetInnerHTML={{__html: post.content}}/>
+        </button>
       )
     })    
   }
@@ -39,8 +42,17 @@ export default function Blog(props:props) {
 
   return (
     <div className='blogPanel panel' id='blog'>
-      <div className="container">
-        <h1>Blog Section</h1>
+      <h2 className="blogTitle">Blog</h2>
+      <div className="articlePreview">
+        <Img src={postData[activeIndex].image} fill={true} alt='blog image' style={{objectFit: 'cover', zIndex: -1}} />
+        <div className="gradientOverlay">
+          <h3>{postData[activeIndex].title}</h3>
+          <p className="postPreview" dangerouslySetInnerHTML={{__html: postData[activeIndex].content}}/> 
+          <Link className="readMore" href={`/${postData[activeIndex].slug}`}>Read More <FaArrowRight /></Link>
+
+        </div>
+      </div>
+      <div className="previewSelect">
         {posts}
       </div>
     </div>

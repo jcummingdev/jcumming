@@ -66,6 +66,7 @@ export async function getStaticProps() {
       image: true,
       postDate: true,
       slug: true,
+      content: true,
       category: {
         select: {
           name: true,
