@@ -234,10 +234,18 @@ footer{
   background: black;
   color: white;
   display: flex;
-  height: 400px;
-  padding: 50px 0px;
+  height: 250px;
+  padding: 50px 0px 0px 0px; 
   position: relative;
-  margin-top: 500px;
+  margin-top: 150px;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+footer .copyright {
+  background: #111;
+  padding: 20px 0px;
+  text-align: center;
 }
 
 footer::before{
