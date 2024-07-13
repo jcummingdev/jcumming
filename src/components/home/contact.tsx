@@ -64,7 +64,7 @@ export default function Contact() {
       <div className="container">
         <div className="contactPanelLeft">
           <h1>Contact Me</h1>
-          <p>Fill in the form to the right to get in touch with me. I'll get back to you as soon as possible.</p>
+          <p>Fill in the form to the right to get in touch with me. I&apos;ll get back to you as soon as possible.</p>
           <p>Alternatively, feel free to connect and drop me a line on social media!</p>
           <div className="socialMediaIcons">
             <Link href="https://github.com/jcummingdev" target="_blank" rel="noopener noreferrer"><FaGithub size={32} /></Link>
