@@ -234,10 +234,10 @@ footer{
   background: black;
   color: white;
   display: flex;
-  height: 250px;
+  height: 350px;
   padding: 50px 0px 0px 0px; 
   position: relative;
-  margin-top: 150px;
+  margin-top: 250px;
   flex-direction: column;
   justify-content: flex-end;
 }
@@ -764,7 +764,7 @@ footer::before{
 
 .articlePreview {
   position: relative;
-  width: 80%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
