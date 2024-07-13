@@ -54,7 +54,7 @@ export default function Header () {
                   <li><button onClick={() => signIn('google')}><FiLogIn /></button></li>                  
                 }
                 <div className='socialMediaIcons'>
-                  <a href="https://github.com/sadxxface" target='_blank'><FaGithub /></a>
+                  <a href="https://github.com/jcummingdev" target='_blank'><FaGithub /></a>
                   <a href="https://www.linkedin.com/in/jrcumming/" target='_blank'><FaLinkedin /></a>
                 </div>
               </ul>
@@ -91,7 +91,7 @@ export default function Header () {
         <div>
            <div className='sideCopyright'>
            <div className='socialMediaIcons'>
-            <a href="https://github.com/sadxxface" target='_blank'><FaGithub /></a>
+            <a href="https://github.com/jcummingdev" target='_blank'><FaGithub /></a>
             <a href="https://www.linkedin.com/in/jrcumming/" target='_blank'><FaLinkedin /></a>
           </div>
              <p>Copyright 2023</p>

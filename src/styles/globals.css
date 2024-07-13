@@ -841,7 +841,100 @@ footer::before{
 .contactPanel{
   background: white;
   position: relative;
-  height: 500px;
+  height: fit-content;
+  padding-top: 80px;
+}
+
+.contactPanel .container {
+  display: flex;
+  max-width: 1000px;
+  gap: 40px;
+}
+
+.contactPanelLeft, .contactPanelRight {
+  width: 100%;
+}
+
+.contactPanelLeft {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 40px;
+  font-family: 'Inter', sans-serif;
+}
+
+.contactPanelLeft h1 {
+  font-size: 3rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.contactPanelRight Form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 40px;
+  background: white;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+  border-radius: 25px;
+  max-width: 500px;
+}
+
+.contactPanelRight Form input, .contactPanelRight Form textarea {
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid black;
+  background: transparent;
+  color: black;
+  font-size: 1rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.contactPanelRight Form button {
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid black;
+  background: transparent;
+  color: black;
+  font-size: 1rem;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+.contactPanelRight Form button:hover {
+  background: black;
+  color: white;
+}
+
+
+.contactPanelRight .error {
+  color: black;
+  font-size: 1.2rem;
+  text-align: center;
+  height: 30px;
+  background: lightpink;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+}
+
+
+.contactPanelRight .success {
+  color: black;
+  font-size: 1.2rem;
+  text-align: center;
+  height: 30px;
+  background: lightgreen;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
 }
 
 /* Single Post Page */
