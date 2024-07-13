@@ -37,14 +37,13 @@ export default function Contact() {
     }
 
     try {
-      const res = await axios.post('/api/contact', formData)
-      if (res.status === 200) {
-        setFormData({
-          name: '',
-          email: '',
-          message: '',
-        })
-        setError(null)
+      const res = await axios.post('/api/contact', {
+        name: formData.name,
+        email: formData.email,
+        message: formData.message
+      })
+      if (res.status !== 200) {
+        setError('Failed to send message. Please try again later.')
       }
     } catch (error) {
       console.error(error)
@@ -52,6 +51,11 @@ export default function Contact() {
     } finally {
       nProgress.done()
       setError("Your message has been sent!")
+      setFormData({
+        name: '',
+        email: '',
+        message: '',
+      })
     }
   }
 
