@@ -88,6 +88,6 @@ model Portfolio {
   type String
 
   repo String ?
-  completed DateTime @default(now())
+  completed DateTime ? @default(now())
 }
 

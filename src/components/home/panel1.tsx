@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowDown } from "@fortawesome/free-solid-svg-icons"
 import Link from "next/link"
+import { FaArrowDown } from "react-icons/fa6"
 
 type ComponentProps = {
   scrollPos: number
@@ -36,7 +37,7 @@ export default function IntroPanel(props:ComponentProps) {
           <h1 className="introHead" >My name is <span>Jay Cumming </span>and I write software</h1>
           <span>See My Work</span>
           <Link href={`#portfolio`} className="scrollDownButton">
-            <FontAwesomeIcon icon={faArrowDown} /> 
+            <FaArrowDown />
           </Link>
         </div>
       </div>

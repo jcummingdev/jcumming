@@ -13,14 +13,33 @@ export default function Home ({ postData, portfolioItems }:InferGetStaticPropsTy
 
   const [scrollPos, setScrollPos] = useState<number>(0)
   const [preLoaderActive, setPreLoaderActive] = useState<boolean>(true)
+  const [darkMode, setDarkMode] = useState<boolean>(false)
 
   const globalState = useAppContext()
 
   useEffect(() => {
     window.addEventListener('scroll', () => {
       setScrollPos(window.scrollY)
+      scrollDarkMode()
     })
   }, [])
+
+  function scrollDarkMode() {
+    if (window.scrollY > 900 && window.scrollY < 3500) {
+      setDarkMode(true)
+    } else {
+      setDarkMode(false)
+    }
+  }
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('darkMode')
+    } else {
+      document.documentElement.classList.remove('darkMode')
+    }
+  }), [darkMode]
+
   
   return (
     <>
@@ -28,7 +47,7 @@ export default function Home ({ postData, portfolioItems }:InferGetStaticPropsTy
         preLoaderActive && !globalState?.appLaunched? <PreLoader stateFunction={setPreLoaderActive}/> : (
         <div>
           <IntroPanel scrollPos={scrollPos}/>
-          <Portfolio scrollPos={scrollPos} portfolioItems={portfolioItems}/>
+          <Portfolio portfolioItems={portfolioItems}/>
           <Blog postData={postData}/>
           <Contact />
         </div>        
@@ -62,9 +81,14 @@ export async function getStaticProps() {
     take: 5
   })
 
-  const portfolioItems = await prisma.portfolio.findMany({
-    take: 3
+  const portfolioItemsRaw = await prisma.portfolio.findMany({
+    take: 5,
+    orderBy: {
+      completed: 'desc'
+    }
   })
+
+  const portfolioItems = JSON.parse(JSON.stringify(portfolioItemsRaw))
 
   if (postsRaw.length != 0) {
     const postData = JSON.parse(JSON.stringify(postsRaw))

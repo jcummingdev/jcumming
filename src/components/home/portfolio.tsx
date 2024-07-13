@@ -1,13 +1,14 @@
-import { useEffect } from 'react'
 import Img from 'next/image'
 import { useSession } from "next-auth/react"
-import { useState } from 'react'
-import { FiPlus, FiX } from 'react-icons/fi'
+import { useEffect, useState } from 'react'
+import { FiPlus } from 'react-icons/fi'
 import Tiptap from '../admin/Tiptap'
 import { useS3Upload } from 'next-s3-upload'
 import axios from 'axios'
 import nProgress from 'nprogress'
-
+import Link from 'next/link'
+import { FaGithub, FaGlobe } from 'react-icons/fa6'
+import { useAppContext } from '../template/appContext'
 
 type ComponentProps = {
   scrollPos: number
@@ -20,33 +21,18 @@ type PortfolioItem = {
   image: string
   tech: string
   type: string
+  repo: string | null
+  completed: string | null
 }
 
-export default function Portfolio({ scrollPos, portfolioItems } : { scrollPos: number, portfolioItems: PortfolioItem[]} ) {
+export default function Portfolio({  portfolioItems } : { portfolioItems: PortfolioItem[]} ) {
 
   let { FileInput, openFileDialog, uploadToS3 } = useS3Upload();
 
   const [Items, setItems] = useState(portfolioItems)
   const [isDarkMode, setIsDarkMode] = useState(false)
   const [createNewItem, setCreateNewItem] = useState(false)
-  const [newItem, setNewItem] = useState({name: '', text: '', link: '', image: '', tech: '', type: ''})
-
-  // useEffect(() => {
-  //   var viewportOffset = document.getElementById('portfolio')!.getBoundingClientRect()
-  //   var top = viewportOffset.top + window.innerHeight
-  //   var bottom = viewportOffset.bottom
-
-
-  //   window.addEventListener('scroll', () => {
-  //     if ((top < props.scrollPos) && (bottom > 200)) {
-  //       document.documentElement.classList.add('darkMode')
-  //     } else {
-  //       document.documentElement.classList.remove('darkMode')
-  //     }      
-  //   })
-
-
-  // }, [props.scrollPos])
+  const [newItem, setNewItem] = useState({name: '', text: '', link: '', image: '', tech: '', type: '', repo: null, completed: null})
 
   const { data: session, status } = useSession()
 
@@ -66,6 +52,8 @@ export default function Portfolio({ scrollPos, portfolioItems } : { scrollPos: n
 
     let { url } = await uploadToS3(file);
 
+    console.log(url)
+
     // Add the image url to the postData object
     setNewItem((prevState) => ({
         ...prevState,
@@ -83,14 +71,14 @@ export default function Portfolio({ scrollPos, portfolioItems } : { scrollPos: n
 
     setItems([newItem, ...Items])
     togglePortoflioEditor()
-    setNewItem({name: '', text: '', link: '', image: '', tech: '', type: ''})
+    setNewItem({name: '', text: '', link: '', image: '', tech: '', type: '', repo: null, completed: null})
 
     nProgress.done()
   }
 
   const portfolioShowcase = Items.map((item, index) => {
     return (
-      <div className='portfolioItem'>
+      <div className='portfolioItem' key={index}>
         <div className='portfolioImg'>
           <Img src={item.image? item.image : 'https://placehold.co/1000x500'} alt="Portfolio Image" fill={true} style={{objectFit: 'cover'}} />
         </div>
@@ -98,8 +86,16 @@ export default function Portfolio({ scrollPos, portfolioItems } : { scrollPos: n
           <h2>{item.name}</h2>
           <p>{item.type}</p>
           <p>{item.text}</p>
-          <h4>Tech Used: {item.tech}</h4>
-          <a href={item.link} target="_blank" rel="noreferrer">{item.link}</a>
+          <p><strong>Tech Used: {item.tech}</strong></p>
+          <div className='portfolioLinks'>
+            <Link href={item.link} target="_blank" rel="noreferrer"><FaGlobe /></Link>
+            {
+              item.repo?
+              <Link href={item.repo} target="_blank" rel="noreferrer"><FaGithub /></Link>
+              :
+              <p>Private Repository</p>
+            }
+          </div>
         </div>
       </div>
     )
