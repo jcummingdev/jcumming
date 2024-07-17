@@ -27,8 +27,8 @@ export default function Blog({ postData } : {postData: post[]}) {
     posts = postData.map((post:post, index:number) => {
       return (
         <button className={`postPreviewSelect ${index === activeIndex ? 'active' : ''}`} key={post.id} onClick={() => setActiveIndex(index)}>
-          <h2>{post.title}</h2>
-          <p>{post.category.name}</p>
+          <p className="postMeta">{post.category.name}</p>
+          <h4>{post.title}</h4>
           <p className="postPreview" dangerouslySetInnerHTML={{__html: post.content}}/>
         </button>
       )

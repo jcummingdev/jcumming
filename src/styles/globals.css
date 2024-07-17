@@ -789,6 +789,7 @@ footer::before{
 
 .articlePreview h3 {
   font-size: 2rem;
+  font-family: var(--secondary-font)
 }
 
 .articlePreview p {
@@ -823,6 +824,52 @@ footer::before{
   color: white;
   cursor: pointer;
   text-align: left;
+  font-family: var(--secondary-font);
+  font-size: 1rem;
+  position: relative;
+}
+
+.postPreviewSelect::before{
+  content: '';
+  position: absolute;
+  width: 0%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: linear-gradient(70deg, rgba(255,255,255,1) 0%, rgba(200,200,200,1) 100%);
+  z-index: 0;
+  transition: .3s ease;
+}
+
+.postPreviewSelect:hover::before{
+  width: 100%;
+}
+
+.postPreviewSelect.active::before{
+  width: 100%;
+}
+
+.postPreviewSelect h4 {
+  font-family: var(--secondary-font);
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  z-index: 1;
+  mix-blend-mode: difference;
+}
+
+.postPreviewSelect .postMeta {
+  font-size: .8rem;
+  padding: 2px 5px;
+  background: white;
+  color: black;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  z-index: 1;
+}
+
+.postPreview{
+  z-index: 1;
+  mix-blend-mode: difference;
 }
 
 .postPreviewSelect:last-child{

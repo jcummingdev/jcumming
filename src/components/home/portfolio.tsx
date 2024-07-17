@@ -85,7 +85,7 @@ export default function Portfolio({  portfolioItems } : { portfolioItems: Portfo
           <p>{item.text}</p>
           <p><strong>Tech Used: {item.tech}</strong></p>
           <div className='portfolioLinks'>
-            <Link href={item.link} target="_blank" rel="noreferrer"><FaGlobe /></Link>
+            <Link href={`http://${item.link}`} target="_blank" rel="noreferrer"><FaGlobe /></Link>
             {
               item.repo?
               <Link href={item.repo} target="_blank" rel="noreferrer"><FaGithub /></Link>
