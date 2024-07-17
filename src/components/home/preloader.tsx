@@ -48,7 +48,7 @@ export default function PreLoader(props:ComponentProps) {
                             <span id="typeEffect"></span>
                             <span className="textCursor"></span>
                         </div>
-                        <button style={appReady? {opacity: '1'} : {}} onClick={launchApp}>Enter</button>
+                        <button style={appReady? {opacity: '1'} : {cursor: 'default'}} onClick={appReady? launchApp : () => {}}>Enter</button>
                     </div>
                 </div>
             </div>
