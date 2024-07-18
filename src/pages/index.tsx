@@ -95,8 +95,9 @@ export async function getStaticProps() {
       props: {
         postData,
         portfolioItems,
-        key: postData[0].id
-      }
+        key: postData[0].id,
+      },
+      revalidate: 10,
     }
   }
 
@@ -104,6 +105,7 @@ export async function getStaticProps() {
     props: {
       postData: null,
       portfolioItems,
-    }
+    },
+    revalidate: 10,
   }
 }

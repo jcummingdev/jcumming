@@ -45,7 +45,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
         { params: { postId: post.slug } }
     )) satisfies GetStaticPaths
 
-    return {paths, fallback: 'blocking'}
+    return {
+        paths, 
+        fallback: 'blocking'
+    }
 }
 
 export async function getStaticProps({ params }:Params) {
@@ -90,7 +93,8 @@ export async function getStaticProps({ params }:Params) {
     return {
         props: {
             postData: null
-        }
+        }, 
+        revalidate: 10,
     }
 
 
